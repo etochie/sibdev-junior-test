@@ -1,26 +1,19 @@
 version: '3'
 services:
-    nginx:
-        build:
-            context: ./
-            dockerfile: ./nginx/Dockerfile
-        depends_on:
-            - server
-        ports:
-            - 80:80
-
-
     server:
         build:
             context: ./
             dockerfile: ./server/Dockerfile
-        command: bash -c "sleep 10 && python manage.py migrate && gunicorn config.wsgi -c ./config/gunicorn.py"
-
+        command: python manage.py runserver 0.0.0.0:8000
+        volumes:
+            - ./server:/server
+        ports:
+            - 8000:8000
         depends_on:
             - db
             - redis
         environment:
-            DEBUG: 'False'
+            DEBUG: 'True'
             DATABASE_URL: 'postgres://postgres:@db:5432/postgres'
             BROKER_URL: 'amqp://user:password@rabbitmq:5672/my_vhost'
 
@@ -32,10 +25,7 @@ services:
 
     redis:
         image: "redis:6.0.6"
-
         ports:
             - "6379:6379"
-
         environment:
             - REDIS_REPLICATION_MODE=master
-
