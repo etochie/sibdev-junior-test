@@ -1,4 +1,4 @@
-## Тестовое на позицию Junior Backend разработчик 
+## Тестовое задание на позицию Junior Backend разработчик 
 
 #### Установка Docker
 * [Подробное руководство по установке docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
